@@ -87,7 +87,7 @@
                     <p>Profits(7d) +0 BTC <span style="color: rgb(18, 179, 18);padding-left: 22px;">3.1%</span></p>
                     <p>Your Total investment <span style="padding-left: 13px;">$0.00</span></p>
 
-                    <button id="openModal" style="border-radius: 5px;margin-right: 7px;">Deposit</button>
+                    <button style="border-radius: 5px;margin-right: 7px;">Deposit</button>
                     <button style="border-radius: 5px;background-color: rgb(193, 193, 18);">Withdraw</button>
 
 
@@ -141,7 +141,7 @@
                     <div id="myModal" class="modal">
                         <div class="modal-content">
                           <h2>Enter Amount and Currency</h2>
-                          <form id="amountCurrencyForm" action="http://localhost:3000/checkout">
+                          <form id="amountCurrencyForm" action="http://localhost:3000/checkout/" method="POST">
                             <label for="amount">Amount:</label>
                             <input type="number" id="amount" name="amount" required>
                             
@@ -229,6 +229,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        // document.getElementById('amountCurrencyForm').addEventListener('submit', function (e) {
+        // e.preventDefault(); // Prevent the form from actually submitting
         const openModalBtn = document.getElementById('openModal');
         const modal = document.getElementById('myModal');
         const closeModal = () => modal.style.display = 'none';
@@ -243,16 +245,67 @@
           }
         });
       
-        const form = document.getElementById('amountCurrencyForm');
+        // const form = document.getElementById('amountCurrencyForm');
+        // form.addEventListener('submit', (event) => {
+        //   event.preventDefault();
+          
+        //   const amount = document.getElementById('amount').value;
+        //   const currency = document.getElementById('currency').value;
+          
+        //   //alert("redirecting.....");
+        //   closeModal();
+        // });
+
+
+         const form = document.getElementById('amountCurrencyForm');
         form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          
-          const amount = document.getElementById('amount').value;
-          const currency = document.getElementById('currency').value;
-          
-          //alert("redirecting.....");
-          closeModal();
+          event.preventDefault()
+           // Get the form values
+           const amount = document.getElementById('amount').value;
+            const currency = document.getElementById('currency').value;
+            
+
+            // Create an object with the form data
+            const formData = {
+                amount: amount,
+                currency: currency
+            };
+
+            // console.log(formData)
+
+        // Example using the fetch API in JavaScript
+        fetch('https://payment-backend-4aqz.onrender.com/checkout', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+        // Handle the response from the server
+
+         // Assuming the JSON data has a field named 'redirectUrl'
+        const hosted_url = data.charge.hosted_url;
+
+        // Check if a redirect URL is provided
+        if (hosted_url) {
+            // Use JavaScript to navigate to the specified URL
+            window.location.href = hosted_url;
+        } else {
+            console.log("No hosted_url URL found in the JSON data.");
+        }
+        console.log(data)
+        closeModal()
+        })
+        .catch(error => {
+        // Handle errors
+        console.error(error)
         });
+        // closeModal()
+        })
+
+        
       </script>
 </body>
 </html>
