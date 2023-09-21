@@ -137,11 +137,12 @@
 
                     <button id="openModal">Deposit</button>
                     <button>Withdraw</button>
-
+<!--https://payment-backend-4aqz.onrender.com/checkout/-->
+<!---http://localhost:3000/checkout/-->
                     <div id="myModal" class="modal">
                         <div class="modal-content">
                           <h2>Enter Amount and Currency</h2>
-                          <form id="amountCurrencyForm" action="http://localhost:3000/checkout/" method="POST">
+                          <form id="amountCurrencyForm" method="POST">
                             <label for="amount">Amount:</label>
                             <input type="number" id="amount" name="amount" required>
                             
@@ -274,7 +275,15 @@
             // console.log(formData)
 
         // Example using the fetch API in JavaScript
-        fetch('https://payment-backend-4aqz.onrender.com/checkout', {
+
+      //  fetch('https://payment-backend-4aqz.onrender.com/checkout/')
+  //.then(response => {
+   // if (!response.ok) {
+     // throw new Error('Network response was not ok');
+    //}
+   // return response.json();
+  //})
+        fetch('https://payment-bknd.onrender.com/checkout/', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
