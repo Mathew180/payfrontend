@@ -227,6 +227,45 @@
     document.getElementById("myButton").onclick = function () {
         location.href = "www.yoursite.com";
     };
+
+    $(document).ready(function() {
+    // Listen for form submission
+    $('.form').on('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        var formData = $(this).serialize(); // Serialize form data
+
+        // Submit form data using fetch API
+        fetch('https://payment-bknd.onrender.com/api/auth/login', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                // Show success alert message
+                alert("Email verification link has been sent to the email you provided! Verify before proceeding to login");
+                // Reset the form
+                $('.form')[0].reset();
+            } else if (response.status === 500) {
+                // Email already exists
+                alert('Email already exists. Please use a different email.');
+            } else {
+                // Show error alert message
+                alert('An error occurred while processing your request. Please try again later.');
+                console.error('Error:', response.statusText);
+            }
+        })
+        .catch(error => {
+            // Show error alert message
+            alert('An error occurred while processing your request. Please try again later.');
+            console.error('Error:', error);
+        });
+    });
+});
+
+
 </script>
 </body>
 
