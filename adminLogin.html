@@ -78,7 +78,7 @@
                     $(this).removeClass('fa-eye-slash').addClass('fa-eye');
                 }
             });
-        });
+        }); 
           // Event listener for toggle password visibility
         // document.getElementById('toggle-password').addEventListener('click', () => {
         //     const passwordField = document.getElementById('password');
@@ -118,7 +118,7 @@
 
         if (response.ok) {
             alert(data.message); // Show success message
-            window.location.href = 'https://payment-bknd.onrender.com/admin.html'; // Redirect to admin interface
+            window.location.href = 'https://crypto-360.netlify.app/admin.html'; // Redirect to admin interface
         } else {
             alert(data.message || 'Login failed. Please check your credentials.');
         }
